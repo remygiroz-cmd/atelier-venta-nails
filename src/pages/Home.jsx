@@ -1,21 +1,93 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
+// Fond optionnel du hero — auto-détecté :
+//   • public/hero-bg.mp4 → vidéo (prioritaire)
+//   • public/hero-bg.jpg → photo
+//   • aucun fichier      → dégradé nude/rose par défaut
 function Home() {
+  // 'loading' au montage, 'loaded' si le fichier existe, 'error' si 404
+  const [photoState, setPhotoState] = useState('loading')
+  const [videoState, setVideoState] = useState('loading')
+
+  const hasVideo = videoState === 'loaded'
+  const hasPhoto = photoState === 'loaded' && !hasVideo
+  const hasMedia = hasVideo || hasPhoto
+
   return (
     <>
       {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-gradient-to-br from-nude-50 via-rose-50 to-nude-100" />
-        <div
-          aria-hidden="true"
-          className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-rose-100/60 blur-3xl -z-10"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-gold-300/30 blur-3xl -z-10"
-        />
+        {/* Dégradé de secours (toujours visible derrière tout le reste) */}
+        <div className="absolute inset-0 -z-30 bg-gradient-to-br from-nude-50 via-rose-50 to-nude-100" />
 
-        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32 text-center">
+        {/* Tâches floues décoratives — masquées si on a un fond média (sinon ça surcharge) */}
+        {!hasMedia && (
+          <>
+            <div
+              aria-hidden="true"
+              className="absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-rose-100/60 blur-3xl -z-20"
+            />
+            <div
+              aria-hidden="true"
+              className="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-gold-300/30 blur-3xl -z-20"
+            />
+          </>
+        )}
+
+        {/* Photo de fond (si elle existe) */}
+        {photoState !== 'error' && (
+          <img
+            src="/hero-bg.jpg"
+            alt=""
+            aria-hidden="true"
+            onLoad={() => setPhotoState('loaded')}
+            onError={() => setPhotoState('error')}
+            className={`absolute inset-0 -z-20 w-full h-full object-cover transition-opacity duration-1000 ${
+              hasPhoto ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
+
+        {/* Vidéo de fond (si elle existe, prioritaire sur la photo) */}
+        {videoState !== 'error' && (
+          <video
+            src="/hero-bg.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            onLoadedData={() => setVideoState('loaded')}
+            onError={() => setVideoState('error')}
+            aria-hidden="true"
+            className={`absolute inset-0 -z-10 w-full h-full object-cover transition-opacity duration-1000 ${
+              hasVideo ? 'opacity-100' : 'opacity-0'
+            }`}
+          />
+        )}
+
+        {/* Voile pour garantir la lisibilité du texte quand un média est présent */}
+        {hasMedia && (
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 -z-10 bg-gradient-to-b from-nude-50/30 via-nude-50/10 to-nude-50/85 pointer-events-none"
+          />
+        )}
+
+        {/* Halo doux derrière le logo (uniquement avec un média, pour faire ressortir les ors) */}
+        {hasMedia && (
+          <div
+            aria-hidden="true"
+            className="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 w-[460px] h-[460px] rounded-full -z-10 pointer-events-none"
+            style={{
+              background:
+                'radial-gradient(circle, rgba(250, 246, 241, 0.6) 0%, transparent 65%)',
+            }}
+          />
+        )}
+
+        <div className="relative mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32 text-center">
           <img
             src="/logo.png"
             alt="L'Atelier Venta'Nails — Prothésiste ongulaire"
