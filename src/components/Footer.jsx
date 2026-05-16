@@ -86,7 +86,17 @@ function Footer() {
 
       <div className="border-t border-nude-200">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-700/70">
-          <p>© {year} L&rsquo;Atelier Venta&rsquo;Nails. Tous droits réservés.</p>
+          <p>
+            © {year} L&rsquo;Atelier Venta&rsquo;Nails. Tous droits réservés.
+            <span className="mx-2 text-ink-700/30" aria-hidden="true">·</span>
+            <Link
+              to="/admin/login"
+              className="text-ink-700/40 hover:text-rose-500 transition-colors"
+              title="Espace administration"
+            >
+              Admin
+            </Link>
+          </p>
           <p className="font-display italic text-sm text-rose-500">
             Beauté · Élégance · Précision
           </p>
