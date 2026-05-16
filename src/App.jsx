@@ -1,28 +1,31 @@
-import { useState } from 'react'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import Layout from './components/Layout'
+import Home from './pages/Home'
+import Prestations from './pages/Prestations'
+import Galerie from './pages/Galerie'
+import Reservation from './pages/Reservation'
+import APropos from './pages/APropos'
+import Contact from './pages/Contact'
+import NotFound from './pages/NotFound'
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      { path: '/', element: <Home /> },
+      { path: '/prestations', element: <Prestations /> },
+      { path: '/galerie', element: <Galerie /> },
+      { path: '/reservation', element: <Reservation /> },
+      { path: '/a-propos', element: <APropos /> },
+      { path: '/contact', element: <Contact /> },
+      { path: '*', element: <NotFound /> },
+    ],
+  },
+])
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-pink-50 via-white to-rose-100 text-slate-800">
-      <main className="text-center px-6 py-12">
-        <h1 className="text-5xl font-semibold tracking-tight text-rose-600">
-          Atelier Venta Nails
-        </h1>
-        <p className="mt-4 text-lg text-slate-600">
-          React + Vite + Tailwind CSS ready to use.
-        </p>
-
-        <button
-          type="button"
-          onClick={() => setCount((c) => c + 1)}
-          className="mt-8 inline-flex items-center rounded-full bg-rose-500 px-6 py-3 text-white shadow-lg shadow-rose-200 hover:bg-rose-600 transition"
-        >
-          Count is {count}
-        </button>
-      </main>
-    </div>
-  )
+  return <RouterProvider router={router} />
 }
 
 export default App
