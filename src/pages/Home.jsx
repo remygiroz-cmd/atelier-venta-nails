@@ -15,69 +15,40 @@ function Home() {
           className="absolute -bottom-32 -left-24 w-[420px] h-[420px] rounded-full bg-gold-300/30 blur-3xl -z-10"
         />
 
-        <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 pt-20 pb-24 sm:pt-28 sm:pb-32 lg:pt-36 lg:pb-40">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-7 text-center lg:text-left">
-              <p className="text-xs sm:text-sm uppercase tracking-[0.3em] text-gold-500">
-                Prothésie ongulaire — Ventabren (13)
-              </p>
-              <h1 className="mt-5 font-display text-5xl sm:text-6xl lg:text-7xl text-ink-900 leading-[1.05]">
-                L&rsquo;Atelier
-                <br />
-                <span className="text-rose-500 italic">Venta&rsquo;Nails</span>
-              </h1>
-              <p className="mt-6 max-w-xl mx-auto lg:mx-0 text-base sm:text-lg text-ink-700 leading-relaxed">
-                Un instant pour vous, des ongles à votre image. Pose,
-                remplissage et nail&nbsp;art réalisés avec précision dans une
-                ambiance feutrée, à Ventabren.
-              </p>
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 pt-16 pb-20 sm:pt-20 sm:pb-28 lg:pt-24 lg:pb-32 text-center">
+          <img
+            src="/logo.png"
+            alt="L'Atelier Venta'Nails — Prothésiste ongulaire"
+            width="1024"
+            height="1024"
+            className="mx-auto h-56 sm:h-72 lg:h-80 w-auto drop-shadow-[0_8px_24px_rgba(196,139,128,0.18)]"
+          />
 
-              <div className="mt-10 flex flex-col sm:flex-row items-center lg:items-start justify-center lg:justify-start gap-4">
-                <Link
-                  to="/reservation"
-                  className="inline-flex items-center justify-center rounded-full bg-rose-500 px-7 py-3.5 text-sm tracking-wide uppercase text-white shadow-md shadow-rose-200 hover:bg-rose-600 transition-colors"
-                >
-                  Prendre rendez-vous
-                </Link>
-                <Link
-                  to="/prestations"
-                  className="inline-flex items-center justify-center rounded-full border border-rose-300 px-7 py-3.5 text-sm tracking-wide uppercase text-rose-500 hover:bg-rose-50 transition-colors"
-                >
-                  Voir les prestations
-                </Link>
-              </div>
-            </div>
+          <p className="mt-8 text-xs sm:text-sm uppercase tracking-[0.3em] text-gold-500">
+            Ventabren (13) — Sur rendez-vous
+          </p>
 
-            {/* Visuel décoratif */}
-            <div className="lg:col-span-5 hidden lg:block">
-              <div className="relative aspect-[4/5] rounded-[2rem] bg-gradient-to-br from-rose-100 via-nude-100 to-gold-300/40 shadow-xl shadow-rose-200/40 ring-1 ring-nude-200 overflow-hidden">
-                <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
-                  <svg
-                    viewBox="0 0 64 64"
-                    className="w-12 h-12 text-rose-500"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.2"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      d="M32 4c6 10 16 16 16 28a16 16 0 1 1-32 0c0-12 10-18 16-28Z"
-                    />
-                  </svg>
-                  <p className="mt-6 font-display italic text-3xl text-ink-900">
-                    Beauté · Élégance
-                  </p>
-                  <p className="mt-2 font-display italic text-3xl text-rose-500">
-                    Précision
-                  </p>
-                  <div className="mt-6 h-px w-16 bg-gold-400" />
-                  <p className="mt-4 text-xs uppercase tracking-[0.3em] text-gold-500">
-                    Sur rendez-vous
-                  </p>
-                </div>
-              </div>
-            </div>
+          <h1 className="sr-only">L&rsquo;Atelier Venta&rsquo;Nails</h1>
+
+          <p className="mt-6 max-w-xl mx-auto text-base sm:text-lg text-ink-700 leading-relaxed">
+            Un instant pour vous, des ongles à votre image. Pose, remplissage
+            et nail&nbsp;art réalisés avec précision dans une ambiance
+            feutrée.
+          </p>
+
+          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link
+              to="/reservation"
+              className="inline-flex items-center justify-center rounded-full bg-rose-500 px-7 py-3.5 text-sm tracking-wide uppercase text-white shadow-md shadow-rose-200 hover:bg-rose-600 transition-colors"
+            >
+              Prendre rendez-vous
+            </Link>
+            <Link
+              to="/prestations"
+              className="inline-flex items-center justify-center rounded-full border border-rose-300 px-7 py-3.5 text-sm tracking-wide uppercase text-rose-500 hover:bg-rose-50 transition-colors"
+            >
+              Voir les prestations
+            </Link>
           </div>
         </div>
       </section>

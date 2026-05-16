@@ -7,10 +7,14 @@ function Footer() {
     <footer className="mt-24 border-t border-nude-200 bg-nude-100/60">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
         <div>
-          <p className="font-display text-2xl text-ink-900">
-            L&rsquo;Atelier <span className="text-rose-500">Venta&rsquo;Nails</span>
-          </p>
-          <p className="mt-3 text-sm text-ink-700/80 max-w-xs">
+          <img
+            src="/logo.png"
+            alt="L'Atelier Venta'Nails"
+            width="96"
+            height="96"
+            className="h-20 w-auto"
+          />
+          <p className="mt-4 text-sm text-ink-700/80 max-w-xs">
             Prothésie ongulaire à Ventabren. Pose, remplissage, nail art —
             sur rendez-vous.
           </p>

@@ -20,13 +20,20 @@ function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-nude-50/90 backdrop-blur border-b border-nude-200">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <Link
           to="/"
           onClick={() => setOpen(false)}
-          className="font-display text-xl sm:text-2xl text-ink-900 leading-none"
+          aria-label="L'Atelier Venta'Nails — accueil"
+          className="flex items-center"
         >
-          L&rsquo;Atelier <span className="text-rose-500">Venta&rsquo;Nails</span>
+          <img
+            src="/logo.png"
+            alt="L'Atelier Venta'Nails"
+            width="56"
+            height="56"
+            className="h-12 sm:h-14 w-auto"
+          />
         </Link>
 
         {/* Desktop nav */}
