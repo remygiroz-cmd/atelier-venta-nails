@@ -39,7 +39,7 @@ const navItems = [
   },
   {
     to: '/admin/photos',
-    label: 'Photos',
+    label: 'Galerie',
     icon: (
       <>
         <rect
@@ -54,6 +54,28 @@ const navItems = [
         <circle cx="9" cy="11" r="2" strokeLinecap="round" />
         <path
           d="m3 17 5-4 5 4 3-3 5 4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </>
+    ),
+  },
+  {
+    to: '/admin/hero',
+    label: 'Visuel accueil',
+    icon: (
+      <>
+        <rect
+          x="3"
+          y="6"
+          width="14"
+          height="12"
+          rx="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="m17 9 4-2v10l-4-2"
           strokeLinecap="round"
           strokeLinejoin="round"
         />

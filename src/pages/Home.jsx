@@ -1,17 +1,51 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../lib/supabase'
 
-// Fond optionnel du hero — auto-détecté :
-//   • public/hero-bg.mp4 → vidéo (prioritaire)
-//   • public/hero-bg.jpg → photo
-//   • aucun fichier      → dégradé nude/rose par défaut
+const HERO_BUCKET = 'hero-media'
+const PHOTO_PREFIX = 'photo.'
+const VIDEO_PREFIX = 'video.'
+
+// Fond optionnel du hero, géré depuis /admin/hero (bucket Supabase hero-media)
+// La vidéo est prioritaire sur la photo si les deux sont uploadées.
 function Home() {
-  // 'loading' au montage, 'loaded' si le fichier existe, 'error' si 404
-  const [photoState, setPhotoState] = useState('loading')
-  const [videoState, setVideoState] = useState('loading')
+  const [bgUrls, setBgUrls] = useState({ photo: null, video: null })
+  const [photoLoaded, setPhotoLoaded] = useState(false)
+  const [videoLoaded, setVideoLoaded] = useState(false)
 
-  const hasVideo = videoState === 'loaded'
-  const hasPhoto = photoState === 'loaded' && !hasVideo
+  useEffect(() => {
+    let cancelled = false
+    async function load() {
+      const { data, error } = await supabase.storage
+        .from(HERO_BUCKET)
+        .list('', { limit: 50 })
+      if (cancelled || error || !data) return
+      const photoFile = data.find((f) => f.name.startsWith(PHOTO_PREFIX))
+      const videoFile = data.find((f) => f.name.startsWith(VIDEO_PREFIX))
+
+      const buildUrl = (file) => {
+        const { data: u } = supabase.storage
+          .from(HERO_BUCKET)
+          .getPublicUrl(file.name)
+        const ts = file.updated_at
+          ? new Date(file.updated_at).getTime()
+          : Date.now()
+        return `${u.publicUrl}?t=${ts}`
+      }
+
+      setBgUrls({
+        photo: photoFile ? buildUrl(photoFile) : null,
+        video: videoFile ? buildUrl(videoFile) : null,
+      })
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [])
+
+  const hasVideo = !!bgUrls.video && videoLoaded
+  const hasPhoto = !!bgUrls.photo && photoLoaded && !hasVideo
   const hasMedia = hasVideo || hasPhoto
 
   return (
@@ -35,31 +69,29 @@ function Home() {
           </>
         )}
 
-        {/* Photo de fond (si elle existe) */}
-        {photoState !== 'error' && (
+        {/* Photo de fond (si uploadée dans /admin/hero) */}
+        {bgUrls.photo && (
           <img
-            src="/hero-bg.jpg"
+            src={bgUrls.photo}
             alt=""
             aria-hidden="true"
-            onLoad={() => setPhotoState('loaded')}
-            onError={() => setPhotoState('error')}
+            onLoad={() => setPhotoLoaded(true)}
             className={`absolute inset-0 -z-20 w-full h-full object-cover transition-opacity duration-1000 ${
               hasPhoto ? 'opacity-100' : 'opacity-0'
             }`}
           />
         )}
 
-        {/* Vidéo de fond (si elle existe, prioritaire sur la photo) */}
-        {videoState !== 'error' && (
+        {/* Vidéo de fond (prioritaire sur la photo) */}
+        {bgUrls.video && (
           <video
-            src="/hero-bg.mp4"
+            src={bgUrls.video}
             autoPlay
             muted
             loop
             playsInline
             preload="metadata"
-            onLoadedData={() => setVideoState('loaded')}
-            onError={() => setVideoState('error')}
+            onLoadedData={() => setVideoLoaded(true)}
             aria-hidden="true"
             className={`absolute inset-0 -z-10 w-full h-full object-cover transition-opacity duration-1000 ${
               hasVideo ? 'opacity-100' : 'opacity-0'

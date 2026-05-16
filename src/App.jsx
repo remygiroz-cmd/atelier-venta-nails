@@ -18,6 +18,7 @@ import Dashboard from './pages/admin/Dashboard'
 import AdminReservations from './pages/admin/AdminReservations'
 import AdminPrestations from './pages/admin/AdminPrestations'
 import AdminPhotos from './pages/admin/AdminPhotos'
+import AdminHero from './pages/admin/AdminHero'
 
 const router = createBrowserRouter([
   // Site public
@@ -51,6 +52,7 @@ const router = createBrowserRouter([
       { path: 'reservations', element: <AdminReservations /> },
       { path: 'prestations', element: <AdminPrestations /> },
       { path: 'photos', element: <AdminPhotos /> },
+      { path: 'hero', element: <AdminHero /> },
     ],
   },
 ])
